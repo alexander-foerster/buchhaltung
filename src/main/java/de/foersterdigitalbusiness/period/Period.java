@@ -16,6 +16,15 @@ public class Period extends AbstractEntity {
 
     private int year;
 
+    public Period() {
+        super();
+    }
+    public Period(User user, int year) {
+        super();
+        this.user = user;
+        this.year = year;
+    }
+
     public User getUser() {
         return user;
     }
