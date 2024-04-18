@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.views.kategorien;
+package de.foersterdigitalbusiness.accout.konten;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 
-@PageTitle("Kategorien")
-@Route(value = "categories", layout = MainLayout.class)
+@PageTitle("Konten")
+@Route(value = "accounts", layout = MainLayout.class)
 @RolesAllowed("USER")
-public class KategorienView extends Div {
+public class KontenView extends Div {
 
     private GridPro<Client> grid;
     private GridListDataView<Client> gridListDataView;
@@ -43,8 +43,8 @@ public class KategorienView extends Div {
     private Grid.Column<Client> statusColumn;
     private Grid.Column<Client> dateColumn;
 
-    public KategorienView() {
-        addClassName("kategorien-view");
+    public KontenView() {
+        addClassName("konten-view");
         setSizeFull();
         createGrid();
         add(grid);

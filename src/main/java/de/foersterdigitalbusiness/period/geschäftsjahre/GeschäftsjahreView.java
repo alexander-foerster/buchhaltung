@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.views.konten;
+package de.foersterdigitalbusiness.period.geschäftsjahre;
 
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
@@ -20,8 +20,8 @@ import com.vaadin.flow.data.renderer.NumberRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 import de.foersterdigitalbusiness.views.MainLayout;
-import jakarta.annotation.security.RolesAllowed;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -30,10 +30,10 @@ import java.util.List;
 import java.util.Locale;
 import org.apache.commons.lang3.StringUtils;
 
-@PageTitle("Konten")
-@Route(value = "accounts", layout = MainLayout.class)
-@RolesAllowed("USER")
-public class KontenView extends Div {
+@PageTitle("Geschäftsjahre")
+@Route(value = "periods", layout = MainLayout.class)
+@AnonymousAllowed
+public class GeschäftsjahreView extends Div {
 
     private GridPro<Client> grid;
     private GridListDataView<Client> gridListDataView;
@@ -43,8 +43,8 @@ public class KontenView extends Div {
     private Grid.Column<Client> statusColumn;
     private Grid.Column<Client> dateColumn;
 
-    public KontenView() {
-        addClassName("konten-view");
+    public GeschäftsjahreView() {
+        addClassName("geschäftsjahre-view");
         setSizeFull();
         createGrid();
         add(grid);

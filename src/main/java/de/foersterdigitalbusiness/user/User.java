@@ -1,14 +1,12 @@
-package de.foersterdigitalbusiness.data;
+package de.foersterdigitalbusiness.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Column;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import de.foersterdigitalbusiness.data.AbstractEntity;
+import de.foersterdigitalbusiness.period.Period;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -25,6 +23,17 @@ public class User extends AbstractEntity {
     @Lob
     @Column(length = 1000000)
     private byte[] profilePicture;
+
+    @OneToMany(mappedBy = "user")
+    private List<Period> periods = new ArrayList<>();
+
+    public List<Period> getPeriods() {
+        return periods;
+    }
+
+    public void setPeriods(List<Period> periods) {
+        this.periods = periods;
+    }
 
     public String getUsername() {
         return username;

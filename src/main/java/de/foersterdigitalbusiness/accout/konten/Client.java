@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.views.konten;
+package de.foersterdigitalbusiness.accout.konten;
 
 public class Client {
 

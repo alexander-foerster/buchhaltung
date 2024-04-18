@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.views.kategorien;
+package de.foersterdigitalbusiness.period.geschäftsjahre;
 
 public class Client {
 

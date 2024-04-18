@@ -1,8 +1,8 @@
 package de.foersterdigitalbusiness.security;
 
 import com.vaadin.flow.spring.security.AuthenticationContext;
-import de.foersterdigitalbusiness.data.User;
-import de.foersterdigitalbusiness.data.UserRepository;
+import de.foersterdigitalbusiness.user.User;
+import de.foersterdigitalbusiness.user.UserRepository;
 import java.util.Optional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.views.buchungen;
+package de.foersterdigitalbusiness.user.benutzer;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -26,21 +26,21 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import de.foersterdigitalbusiness.data.SamplePerson;
-import de.foersterdigitalbusiness.services.SamplePersonService;
+import de.foersterdigitalbusiness.data.SamplePersonService;
 import de.foersterdigitalbusiness.views.MainLayout;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.Optional;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
-@PageTitle("Buchungen")
-@Route(value = "bookings/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
-@RolesAllowed("USER")
+@PageTitle("Benutzer")
+@Route(value = "users/:samplePersonID?/:action?(edit)", layout = MainLayout.class)
+@RolesAllowed("ADMIN")
 @Uses(Icon.class)
-public class BuchungenView extends Div implements BeforeEnterObserver {
+public class BenutzerView extends Div implements BeforeEnterObserver {
 
     private final String SAMPLEPERSON_ID = "samplePersonID";
-    private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "bookings/%s/edit";
+    private final String SAMPLEPERSON_EDIT_ROUTE_TEMPLATE = "users/%s/edit";
 
     private final Grid<SamplePerson> grid = new Grid<>(SamplePerson.class, false);
 
@@ -62,9 +62,9 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
 
     private final SamplePersonService samplePersonService;
 
-    public BuchungenView(SamplePersonService samplePersonService) {
+    public BenutzerView(SamplePersonService samplePersonService) {
         this.samplePersonService = samplePersonService;
-        addClassNames("buchungen-view");
+        addClassNames("benutzer-view");
 
         // Create UI
         SplitLayout splitLayout = new SplitLayout();
@@ -102,7 +102,7 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
                 UI.getCurrent().navigate(String.format(SAMPLEPERSON_EDIT_ROUTE_TEMPLATE, event.getValue().getId()));
             } else {
                 clearForm();
-                UI.getCurrent().navigate(BuchungenView.class);
+                UI.getCurrent().navigate(BenutzerView.class);
             }
         });
 
@@ -128,7 +128,7 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
                 clearForm();
                 refreshGrid();
                 Notification.show("Data updated");
-                UI.getCurrent().navigate(BuchungenView.class);
+                UI.getCurrent().navigate(BenutzerView.class);
             } catch (ObjectOptimisticLockingFailureException exception) {
                 Notification n = Notification.show(
                         "Error updating the data. Somebody else has updated the record while you were making changes.");
@@ -154,7 +154,7 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
                 // when a row is selected but the data is no longer available,
                 // refresh grid
                 refreshGrid();
-                event.forwardTo(BuchungenView.class);
+                event.forwardTo(BenutzerView.class);
             }
         }
     }

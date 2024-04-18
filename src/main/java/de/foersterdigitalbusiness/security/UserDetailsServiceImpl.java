@@ -1,7 +1,7 @@
 package de.foersterdigitalbusiness.security;
 
-import de.foersterdigitalbusiness.data.User;
-import de.foersterdigitalbusiness.data.UserRepository;
+import de.foersterdigitalbusiness.user.User;
+import de.foersterdigitalbusiness.user.UserRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;

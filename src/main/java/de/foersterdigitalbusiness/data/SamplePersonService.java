@@ -1,7 +1,7 @@
-package de.foersterdigitalbusiness.services;
+package de.foersterdigitalbusiness.data;
 
-import de.foersterdigitalbusiness.data.User;
-import de.foersterdigitalbusiness.data.UserRepository;
+import de.foersterdigitalbusiness.data.SamplePerson;
+import de.foersterdigitalbusiness.data.SamplePersonRepository;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,19 +9,19 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class SamplePersonService {
 
-    private final UserRepository repository;
+    private final SamplePersonRepository repository;
 
-    public UserService(UserRepository repository) {
+    public SamplePersonService(SamplePersonRepository repository) {
         this.repository = repository;
     }
 
-    public Optional<User> get(Long id) {
+    public Optional<SamplePerson> get(Long id) {
         return repository.findById(id);
     }
 
-    public User update(User entity) {
+    public SamplePerson update(SamplePerson entity) {
         return repository.save(entity);
     }
 
@@ -29,11 +29,11 @@ public class UserService {
         repository.deleteById(id);
     }
 
-    public Page<User> list(Pageable pageable) {
+    public Page<SamplePerson> list(Pageable pageable) {
         return repository.findAll(pageable);
     }
 
-    public Page<User> list(Pageable pageable, Specification<User> filter) {
+    public Page<SamplePerson> list(Pageable pageable, Specification<SamplePerson> filter) {
         return repository.findAll(filter, pageable);
     }
 

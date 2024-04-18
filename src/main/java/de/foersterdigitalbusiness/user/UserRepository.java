@@ -1,4 +1,4 @@
-package de.foersterdigitalbusiness.data;
+package de.foersterdigitalbusiness.user;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
