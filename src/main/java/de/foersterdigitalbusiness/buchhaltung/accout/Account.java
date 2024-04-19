@@ -1,13 +1,13 @@
 package de.foersterdigitalbusiness.buchhaltung.accout;
 
+import de.foersterdigitalbusiness.buchhaltung.bookings.Transaction;
 import de.foersterdigitalbusiness.buchhaltung.data.AbstractEntity;
 import de.foersterdigitalbusiness.buchhaltung.period.Period;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "account")
@@ -15,6 +15,9 @@ public class Account extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "period_id")
     private Period period;
+
+    @OneToMany(mappedBy = "account")
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Period getPeriod() {
         return period;
@@ -27,6 +30,14 @@ public class Account extends AbstractEntity {
     private AccountType accountType;
     private BigDecimal ebWert;
     private BigDecimal sbWert;
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
+    }
 
     public Account() {
         super();
