@@ -10,6 +10,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import de.foersterdigitalbusiness.buchhaltung.accout.KontenView;
 import de.foersterdigitalbusiness.buchhaltung.period.Period;
 import de.foersterdigitalbusiness.buchhaltung.period.PeriodRepository;
 import de.foersterdigitalbusiness.buchhaltung.security.AuthenticatedUser;
@@ -41,8 +42,9 @@ public class GeschäftsjahreView extends VerticalLayout {
         grid.addColumn("version")
                 .setHeader("Version").setAutoWidth(true);
         grid.addComponentColumn(item -> {
-            Button btn = new Button("Open", click -> {
-                Notification.show("Show year " + item.getYear());
+            Button btn = new Button("Open");
+            btn.addClickListener( e -> {
+               btn.getUI().ifPresent( ui -> ui.navigate(KontenView.class, item.getId()));
             });
             return btn;
         });
@@ -51,27 +53,7 @@ public class GeschäftsjahreView extends VerticalLayout {
         if(maybeUser.isPresent()) {
             grid.setItems(periods);
             add(grid);
-            final var newDialog = new Dialog();
-            final TextField yearTextField = new TextField("Enter year");
-            Button closeButton = new Button("Speichern", e -> {
-                var yearString = yearTextField.getValue();
-                try {
-                    var year = Integer.parseInt(yearString);
-                    periodRepository.save(new Period(maybeUser.get(), year));
-                } catch (NumberFormatException exception) {
-                    final var notification = new Notification();
-                    notification.addThemeVariants(NotificationVariant.LUMO_WARNING);
-                    notification.show("Ungültige Zahl");
-                } catch (Exception exception) {
-                    final var notification = new Notification();
-                    notification.addThemeVariants(NotificationVariant.LUMO_WARNING);
-                    notification.show("Datensatz konnte nicht gespeichert werden:\n" +
-                            exception.getLocalizedMessage());
-                }
-                newDialog.close();
-                loadData();
-            });
-            newDialog.add(yearTextField, closeButton);
+            final var newDialog = getNewDialog(periodRepository, maybeUser);
 
             final var newButton = new Button("Neues Geschäftsjahr anlegen");
             newButton.addClickListener(clickEvent -> {
@@ -80,6 +62,31 @@ public class GeschäftsjahreView extends VerticalLayout {
             add(newButton);
         } else
             add(new Span("Internal Error: No User"));
+    }
+
+    private Dialog getNewDialog(PeriodRepository periodRepository, Optional<User> maybeUser) {
+        final var newDialog = new Dialog();
+        final TextField yearTextField = new TextField("Enter year");
+        Button closeButton = new Button("Speichern", e -> {
+            var yearString = yearTextField.getValue();
+            try {
+                var year = Integer.parseInt(yearString);
+                periodRepository.save(new Period(maybeUser.get(), year));
+            } catch (NumberFormatException exception) {
+                final var notification = new Notification();
+                notification.addThemeVariants(NotificationVariant.LUMO_WARNING);
+                notification.show("Ungültige Zahl");
+            } catch (Exception exception) {
+                final var notification = new Notification();
+                notification.addThemeVariants(NotificationVariant.LUMO_WARNING);
+                notification.show("Datensatz konnte nicht gespeichert werden:\n" +
+                        exception.getLocalizedMessage());
+            }
+            newDialog.close();
+            loadData();
+        });
+        newDialog.add(yearTextField, closeButton);
+        return newDialog;
     }
 
     private Optional<User> loadData() {

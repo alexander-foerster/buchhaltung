@@ -1,11 +1,12 @@
 package de.foersterdigitalbusiness.buchhaltung.period;
 
+import de.foersterdigitalbusiness.buchhaltung.accout.Account;
 import de.foersterdigitalbusiness.buchhaltung.data.AbstractEntity;
 import de.foersterdigitalbusiness.buchhaltung.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "period")
@@ -15,6 +16,17 @@ public class Period extends AbstractEntity {
     private User user;
 
     private int year;
+
+    @OneToMany(mappedBy = "period")
+    private List<Account> accounts = new ArrayList<>();
+
+    public List<Account> getAccounts() {
+        return accounts;
+    }
+
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
 
     public Period() {
         super();
