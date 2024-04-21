@@ -10,6 +10,7 @@ import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.*;
+import de.foersterdigitalbusiness.buchhaltung.bookings.BuchungenView;
 import de.foersterdigitalbusiness.buchhaltung.period.Period;
 import de.foersterdigitalbusiness.buchhaltung.period.PeriodRepository;
 import de.foersterdigitalbusiness.buchhaltung.security.AuthenticatedUser;
@@ -50,6 +51,13 @@ public class KontenView extends VerticalLayout implements HasUrlParameter<Long> 
                 .setHeader("EB-Wert").setAutoWidth(true);
         grid.addColumn("sbWert")
                 .setHeader("SB-Wert").setAutoWidth(true);
+        grid.addComponentColumn(item -> {
+            Button btn = new Button("Buchungen");
+            btn.addClickListener( e -> {
+                btn.getUI().ifPresent( ui -> ui.navigate(BuchungenView.class, new RouteParameters("account", item.getId().toString())));
+            });
+            return btn;
+        });
 
         add(grid);
         final var newDialog = getNewDialog(periodRepository);

@@ -23,6 +23,7 @@ import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
+import de.foersterdigitalbusiness.buchhaltung.accout.Account;
 import de.foersterdigitalbusiness.buchhaltung.views.MainLayout;
 import jakarta.annotation.security.RolesAllowed;
 import java.util.Optional;
@@ -30,13 +31,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
 
 @PageTitle("Buchungen")
-@Route(value = "bookings/:transactionID?/:action?(edit)", layout = MainLayout.class)
+@Route(value = "accounts/:accountID/bookings/:transactionID?/:action?(edit)", layout = MainLayout.class)
 @RolesAllowed("USER")
 @Uses(Icon.class)
 public class BuchungenView extends Div implements BeforeEnterObserver {
 
     private final String TRANSACTION_ID = "transactionID";
-    private final String TRANSACTION_EDIT_ROUTE_TEMPLATE = "bookings/%s/edit";
+    private final String ACCOUNT_ID ="accountID";
+    private final String TRANSACTION_EDIT_ROUTE_TEMPLATE = "accounts/%s/bookings/%s/edit";
 
     private final Grid<Transaction> grid = new Grid<>(Transaction.class, false);
 
@@ -50,6 +52,7 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
     private final BeanValidationBinder<Transaction> binder;
 
     private Transaction transaction;
+    private Account account;
 
     private final TransactionService transactionService;
 
@@ -122,6 +125,8 @@ public class BuchungenView extends Div implements BeforeEnterObserver {
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
+        Optional<Long> accountId = event.getRouteParameters().getLong(ACCOUNT_ID);
+        System.out.println(accountId);
         Optional<Long> transactionId = event.getRouteParameters().get(TRANSACTION_ID).map(Long::parseLong);
         if (transactionId.isPresent()) {
             Optional<Transaction> transactionFromBackend = transactionService.get(transactionId.get());
