@@ -20,6 +20,7 @@ import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 import de.foersterdigitalbusiness.buchhaltung.accout.KontenView;
+import de.foersterdigitalbusiness.buchhaltung.ausgaben.AusgabenView;
 import de.foersterdigitalbusiness.buchhaltung.bookings.BuchungenView;
 import de.foersterdigitalbusiness.buchhaltung.category.KategorienView;
 import de.foersterdigitalbusiness.buchhaltung.period.geschäftsjahre.GeschäftsjahreView;
@@ -108,6 +109,10 @@ public class MainLayout extends AppLayout {
         }
         if (accessChecker.hasAccess(BenutzerView.class)) {
             nav.addItem(new SideNavItem("Benutzer", BenutzerView.class, LineAwesomeIcon.USER_SOLID.create()));
+
+        }
+        if (accessChecker.hasAccess(AusgabenView.class)) {
+            nav.addItem(new SideNavItem("Ausgaben", AusgabenView.class, LineAwesomeIcon.USER_SOLID.create()));
 
         }
 
