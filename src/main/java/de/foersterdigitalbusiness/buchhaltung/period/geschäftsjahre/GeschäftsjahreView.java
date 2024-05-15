@@ -39,8 +39,6 @@ public class GeschäftsjahreView extends VerticalLayout {
 
         grid.addColumn("year")
                 .setHeader("Geschäftsjahr").setAutoWidth(true);
-        grid.addColumn("version")
-                .setHeader("Version").setAutoWidth(true);
         grid.addComponentColumn(item -> {
             Button btn = new Button("Open");
             btn.addClickListener( e -> {

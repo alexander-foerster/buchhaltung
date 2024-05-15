@@ -16,19 +16,12 @@ public abstract class AbstractEntity {
     @SequenceGenerator(name = "idgenerator", initialValue = 1000)
     private Long id;
 
-    @Version
-    private int version;
-
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public int getVersion() {
-        return version;
     }
 
     @Override
